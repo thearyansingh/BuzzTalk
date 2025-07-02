@@ -23,7 +23,7 @@ const handlesubmit=async(e)=>{
    const  inputValue= inputRef.current?.value
    console.log(inputValue)
 try {
-  const {data}= await axios.post(`http://localhost:4000/api/message/sentMessage/${userSelected?._id}`,
+  const {data}= await axios.post(`https://buzztalk-la08.onrender.com/api/message/sentMessage/${userSelected?._id}`,
     {messages:inputValue},
     { withCredentials: true }
   )

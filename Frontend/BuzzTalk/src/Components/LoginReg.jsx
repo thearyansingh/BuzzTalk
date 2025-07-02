@@ -39,7 +39,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
       formData.append("gender", user.gender);
       formData.append("profilePic", user.profilePic);
 
-      const res = await fetch("http://localhost:4000/api/user/register", {
+      const res = await fetch("https://buzztalk-la08.onrender.com/api/user/register", {
         method: "POST",
         body: formData,
       });

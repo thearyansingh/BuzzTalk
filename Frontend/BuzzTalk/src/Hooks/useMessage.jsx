@@ -16,7 +16,7 @@ const dispatch = useDispatch();
       try {
         // setLoading(true);
         const {data} = await axios.get(
-          `http://localhost:4000/api/message/GetMessage/${userMessage._id}`,
+          `https://buzztalk-la08.onrender.comapi/message/GetMessage/${userMessage._id}`,
           { withCredentials: true }
         );
         // console.log(data)

@@ -21,7 +21,7 @@ const {socket}=useSelector(store=>store.user)
 const dispatch=useDispatch();
 useEffect(() => {
   if (authUser) {
-   const socket=io('http://localhost:4000',{
+   const socket=io('https://buzztalk-la08.onrender.com',{
 query:{userId:authUser._id}
    })
  

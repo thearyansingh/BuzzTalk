@@ -29,7 +29,7 @@ const filteredUsers = users?.filter(user =>
   
   const HandleLogout = async () => {
     const logout = await axios.post(
-      "http://localhost:4000/api/user/logout",
+      "https://buzztalk-la08.onrender.com/api/user/logout",
       {},
       {
         withCredentials: true, //correct way in Axios
