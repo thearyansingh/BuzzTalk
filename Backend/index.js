@@ -1,13 +1,15 @@
 import express from "express";
 import cors from "cors";
-import mongoose from "mongoose";
 import dotenv from "dotenv";
 import mongodbConnect from "./config/mongodb.js";
 import { UserRouter } from "./Routes/userRoute.js";
-dotenv.config({});
-import path from "path";
-import { fileURLToPath } from "url";
+import cookieParser from "cookie-parser";
+import { messageRouter } from "./Routes/MessageRoute.js";
+// import { server } from "./Socket/SocketHandler.js";
+import http from "http";
+import { Server } from "socket.io";
 
+dotenv.config({});
 //App Config
 const app = express();
 const port = process.env.PORT || 4000;
@@ -16,18 +18,55 @@ const port = process.env.PORT || 4000;
 
 //middleWares
 
+const server = http.createServer(app);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(cors());
+export const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST"],
+    credentials: true,
+  },
+});
+
+app.use(
+  cors({
+    origin: "http://localhost:5173", // your frontend URL
+    credentials: true,
+  })
+);
+
+app.use(cookieParser());
+
 // app.use("/uploads", express.static(path.join(__dirname, "uploads"))); // serve images
 
 // api endpoints
 
+app.use("/api/user", UserRouter);
+app.use("/api/message", messageRouter);
 
-app.use("/api/user",UserRouter);
+export const getReceiverSocketId=(receiverId)=>{
+  return userSocketMap[receiverId];
+}
 
-app.listen(port, () => {
+const userSocketMap = {}; // to bring the active userId
+io.on("connection", (socket) => {
+  console.log("🟢 Socket connected:", socket.id);
+  const userId = socket.handshake.query.userId; // to take the userId
+  console.log(userId)
+  if (userId!==undefined) {
+    userSocketMap[userId] = socket.id; // add the userId in map object
+  }
+  io.emit("getOnlineUsers", Object.keys(userSocketMap));
+  socket.on("disconnect", () => {
+    console.log("user disconnected", socket.id);
+    delete userSocketMap[userId];
+    io.emit("getOnlineUsers", Object.keys(userSocketMap));
+  });
+});
+server.listen(port, () => {
   mongodbConnect();
   console.log("server started on port " + port);
 });
+

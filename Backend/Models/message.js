@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const MessageSchemaSchema = new mongoose.Schema(
+const MessageSchema = new mongoose.Schema(
   {
     senderId:{
   type:mongoose.Schema.Types.ObjectId,  // this is used to get the refernce id from the user models
@@ -20,6 +20,6 @@ require:true
   { timestamps: true },
 
 )
-const Messages = mongoose.model('Messages', MessageSchemaSchema);
+const Messages = mongoose.model('Messages', MessageSchema);
 
-export default User;
+export default Messages;

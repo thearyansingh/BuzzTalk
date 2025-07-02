@@ -1,0 +1,27 @@
+@import "tailwindcss";
+@plugin "daisyui";
+/* Example: Customize scrollbar globally or for a specific class */
+/* Customize the scrollbar width *//* Customize the scrollbar width */
+::-webkit-scrollbar {
+  width: 8px;          /* for vertical scrollbar */
+  height: 8px;         /* for horizontal scrollbar */
+}
+
+/* Customize the track (background of the scrollbar) */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* light gray background */
+  border-radius: 10px;
+}
+
+/* Customize the thumb (scroll handle) */
+::-webkit-scrollbar-thumb {
+  background-color: #888;   /* medium gray handle */
+  border-radius: 10px;
+  border: 2px solid #f1f1f1; /* gives padding around thumb */
+}
+
+/* Optional: Thumb hover effect */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555;   /* darker gray on hover */
+}
+
